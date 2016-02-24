@@ -6,7 +6,8 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/diploma_work?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <mapping resource="kz/model/Exersises.hbm.xml"/>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="kz/model/Exercises.hbm.xml"/>
     <mapping resource="kz/model/Themes.hbm.xml"/>
     <mapping resource="kz/model/Users.hbm.xml"/>
   </session-factory>

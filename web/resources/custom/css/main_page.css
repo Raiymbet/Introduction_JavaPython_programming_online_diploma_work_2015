@@ -8,3 +8,44 @@ and open the template in the editor.
     Author     : Raiymbet
 */
 
+#sidebar{
+                width: 20%;
+                height: 100%;
+            }
+            #sidebar ul li{
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 2.5em;
+                border-bottom: 1px solid #ddd;
+            }
+            #sidebar ul li a{
+                text-decoration: none;
+                padding: 5px;
+                cursor: pointer;
+            }
+            #sidebar ul li a i{
+                margin-right: 2em;
+            }
+            #sidebar ul li a:hover, #sidebar ul li a:focus{
+                color: #204d74;
+            }
+            .sidebar-active{
+                display: block;
+            }
+            .sidebar-inactive{
+                display: none;
+            }
+            .list-in-list{
+                margin-left: 20px;
+            }
+            
+            .main-content{
+                padding: 15px;
+                width: 80%;
+                height: 100%;
+            }
+            .main-content-full{
+                padding: 15px;
+                width: 100%;
+                height: 100%;
+            }

@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="users"
     ,catalog="diploma_work"
-    , uniqueConstraints = @UniqueConstraint(columnNames="email") 
+    , uniqueConstraints = @UniqueConstraint(columnNames={"email","password"}) 
 )
 public class Users  implements java.io.Serializable {
 
@@ -23,20 +23,20 @@ public class Users  implements java.io.Serializable {
      private String name;
      private String surname;
      private String email;
-
+     private String password;
+     
     public Users() {
     }
 
-    public Users(int id, String name, String surname, String email) {
+    public Users(int id, String name, String surname, String email, String password) {
        this.id = id;
        this.name = name;
        this.surname = surname;
        this.email = email;
+       this.password = password;
     }
    
-     @Id 
-
-    
+     @Id     
     @Column(name="ID", unique=true, nullable=false)
     public int getId() {
         return this.id;
@@ -74,6 +74,15 @@ public class Users  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Column(name="password", unique=true, nullable=false, length=50)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

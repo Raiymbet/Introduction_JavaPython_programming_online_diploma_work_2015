@@ -5,14 +5,18 @@
  */
 package kz.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import kz.dao.ExercisesDAO;
+import kz.dao.ExercisesDAOImpl;
 import kz.dao.ThemesDAO;
 import kz.dao.ThemesDAOImpl;
+import kz.model.Exercises;
 import kz.model.Themes;
+import kz.service.DocumentReader;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,14 +28,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Raiymbet
  */
 @Controller
-public class indexController {
-    indexController indexController;
-    public indexController() {
-    }
+public class indexController {  
     
-    public indexController(indexController indexController) {
-        this.indexController = indexController;
-    }
+//    @Autowired(required = true)
+//    ThemesDAOImpl themes_service;
+//    @Autowired(required = true)
+//    ExercisesDAOImpl exercises_service;
     
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView index(Model model) throws SQLException{
@@ -41,24 +43,39 @@ public class indexController {
         return mv;
     }
     
-    @RequestMapping(value = "/index/{id}/tutorial.htm", method = RequestMethod.GET)
-    public ModelAndView getThemeContent(@PathVariable(value = "id") Integer id) throws SQLException{
+    @RequestMapping(value = "/index/{themeId}/tutorial.htm", method = RequestMethod.GET)
+    public ModelAndView getThemeContent(@PathVariable("themeId") Integer id) throws SQLException, IOException{
         ModelAndView mv = new ModelAndView("tutorial");
-        ThemesDAO theme_modul = new ThemesDAOImpl();
-        Themes theme = theme_modul.findByID(id.toString());
-        mv.addObject("themeContent", theme);
-        mv.addObject("themes", theme_modul.getAll());
+                       
+        ThemesDAO themeService = new ThemesDAOImpl(); 
+        Themes theme = themeService.findByID(id);
+        
+        String content = DocumentReader.readDocxFile("F:/NetBeansProjects/DiplomaProject/web/resources/tutorial_doc/"+theme.getThemeDoc());
+        
+        List themeExercises = themeService.getThemeExercises(theme);
+        
+        mv.addObject("themes", themeService.getAll()); 
+        mv.addObject("themeContent", theme);        
+        mv.addObject("content", content);
+        mv.addObject("exercises", themeExercises);
         return mv;
     }
     
-    @RequestMapping("/login.htm")
-    public String login(Model model){
-        return "login";
-    }
-    
-    @RequestMapping("/registration.htm")
-    public String register(){
-        return "registration";
+    @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.GET)
+    public ModelAndView take_Exercise(@PathVariable("exerciseId") int exerciseId, @PathVariable("themeId") int themeId) throws SQLException, IOException{
+        ModelAndView mv = new ModelAndView("take_exercise");        
+        
+        ExercisesDAO exerciseService = new ExercisesDAOImpl();
+        Exercises exercise = exerciseService.findByID(exerciseId);
+        
+        List<Exercises> themeExercises = exerciseService.getExercisesByThemeID(themeId);
+        
+        String code_example = DocumentReader.readCodeExample("F:/NetBeansProjects/DiplomaProject/src/java/kz/service/Example.java");
+        
+        mv.addObject("exercise", exercise);
+        mv.addObject("themeExercises", themeExercises);
+        mv.addObject("code", code_example);
+        return mv;
     }
     
     @RequestMapping("/videolesson.htm")

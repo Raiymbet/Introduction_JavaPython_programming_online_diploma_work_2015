@@ -4,5 +4,5 @@
   <schema-selection match-catalog="diploma_work"/>
   <table-filter match-name="themes"/>
   <table-filter match-name="users"/>
-  <table-filter match-name="exersises"/>
+  <table-filter match-name="exercises"/>
 </hibernate-reverse-engineering>

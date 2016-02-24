@@ -20,26 +20,70 @@
         <script src="<c:url value="/resources/lib/bootstrap/js/bootstrap.js" />"></script>
     </head>
     <body>
-        <div class="row">
-            
-            <%-- Exercise description --%>
-            <div class="col-md-4">
-                <textarea id="exercise" readonly style="width: 100%; height: 300px;">
-                    
-                </textarea>
-            </div>
-            
-            <%-- Exercise file input --%>
-            <div class="col-md-4">
-                <textarea id="code_input" style="width: 100%; height: 300px;">
-                    
-                </textarea>
-            </div>
-            
-            <%-- Exercise result of compile and run --%>
-            <div class="col-md-4" id="result" readonly style="width: 100%; height: 300px;">
+        <div class="container-fluid">
+            <%-- Header --%>
+            <div class="row">
+                <%@include file="./layout/header.jsp" %>
+            </div>                      
                 
+            <%-- Links --%>
+            <div class="row">
+                <%@include file="./layout/navigation.jsp" %>                                           
+            </div>           
+             
+            <%-- Center --%>
+            <div class="row">
+                <div class="col-md-12" style="background-color: #9ad3de; margin-top: 2px;">
+                    <div class="col-md-4" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="form-group">
+                            <textarea class="form-control" readonly rows="15" id="exercise_description">
+                                Тапсырма сипаттамасы:
+
+                                <c:out value="${exercise.name}" />
+                                <c:out value="${exercise.description}" />
+                            </textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="form-group">
+                            <textarea id="text_code" class="form-control" rows="15" id="code">
+                                <c:out escapeXml="" value="${code}"/>
+                            </textarea>
+                        </div>
+                            <button id="code_run" class="btn btn-primary pull-right" >Орындау</button>
+                    </div>
+                    
+                    <div class="col-md-4" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="form-group">
+                            <textarea id="text_result_code" class="form-control" readonly rows="15" id="result"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
+                
+            <%-- Footer --%>
+            <%@include file="./layout/footer.jsp" %>
         </div>
+        
+        <script>
+            $(document).ready(function() {
+                
+                $('#code_run').click(function (){                    
+                    var code = $('#text_code').val();
+                    $.ajax({
+                        url: "/DiplomaProject/tutorial/{themeId}/{exerciseId}/take_exercise.htm",
+                        type: "POST",
+                        data: {
+                            code : code
+                        },
+                        success: function (response){
+                            $('#text_result_code').val(response);
+                        }                        
+                    });                          
+                });
+                
+            });
+        </script>
     </body>
 </html>

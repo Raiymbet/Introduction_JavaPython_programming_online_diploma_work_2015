@@ -5,26 +5,35 @@
  */
 package kz.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.util.List;
+import javax.script.ScriptException;
+import kz.dao.ExercisesDAO;
+import kz.dao.ExercisesDAOImpl;
+import kz.model.Exercises;
+import kz.service.CustomJavaCompiler;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
  *
  * @author Raiymbet
  */
 @Controller
-public class ExerciseController extends AbstractController {
+public class ExerciseController {
     
-    public ExerciseController() {
-    }
-    
-    protected ModelAndView handleRequestInternal(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        throw new UnsupportedOperationException("Not yet implemented wds");
-    }
+  @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.POST)
+  @ResponseBody
+  public String run_code(ModelAndView model, @RequestParam(value = "code", required = true) String code) throws IOException, URISyntaxException, ScriptException{
+      String code_result = CustomJavaCompiler.javaCompile("F:/NetBeansProjects/DiplomaProject/src/java/kz/service/Example.java");
+      return code_result;
+  }
     
 }

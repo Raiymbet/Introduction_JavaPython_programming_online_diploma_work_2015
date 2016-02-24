@@ -2,9 +2,13 @@ package kz.model;
 // Generated 04.02.2016 23:24:16 by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +24,9 @@ public class Themes  implements java.io.Serializable {
      private int id;
      private String theme;
      private String themeDoc;
+     
+     private List<Exercises> themeExercises = new ArrayList<>();
+     
 
     public Themes() {
     }
@@ -30,9 +37,7 @@ public class Themes  implements java.io.Serializable {
        this.themeDoc = themeDoc;
     }
    
-     @Id 
-
-    
+    @Id     
     @Column(name="ID", unique=true, nullable=false)
     public int getId() {
         return this.id;
@@ -60,11 +65,18 @@ public class Themes  implements java.io.Serializable {
     
     public void setThemeDoc(String themeDoc) {
         this.themeDoc = themeDoc;
+    }    
+    
+    
+    @OneToMany
+    @JoinColumn(name = "ID_theme")
+    public List<Exercises> getThemeExercises(){
+        return this.themeExercises;
     }
-
-
-
-
+    
+    public void setThemeExercises(List<Exercises> themeExercises){
+        this.themeExercises = themeExercises;
+    }
 }
 
 

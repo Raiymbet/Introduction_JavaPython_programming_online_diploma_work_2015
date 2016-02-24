@@ -11,6 +11,7 @@ package kz.dao;
  */
 import java.sql.SQLException;
 import java.util.List;
+import kz.model.Exercises;
 import kz.model.Themes;
 
 public interface ThemesDAO {
@@ -19,7 +20,15 @@ public interface ThemesDAO {
     public Themes remove(Themes theme) throws SQLException;
     public Themes update(Themes theme) throws SQLException;
     
-    public Themes findByID(String themeID) throws SQLException;
+    public Themes findByID(int themeID) throws SQLException;
     public Themes findByTheme(Themes theme) throws SQLException;
     public Themes getThemeDoc(Themes theme) throws SQLException;
+    
+    public List<Exercises> getThemeExercises(Themes theme) throws SQLException;
+    
+    public void changeExercisesThemeID(Themes a1,Exercises b1) throws SQLException;
+    
+    public List<Exercises> findExercisesByString(String word) throws SQLException;
+    
+    
 }

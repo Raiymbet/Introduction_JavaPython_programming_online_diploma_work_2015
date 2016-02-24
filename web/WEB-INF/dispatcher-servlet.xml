@@ -18,10 +18,15 @@
        xmlns:context="http://www.springframework.org/schema/context" 
        xmlns:mvc="http://www.springframework.org/schema/mvc">
 
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>    
-    <context:component-scan base-package="kz.controller"></context:component-scan>
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>   
+     
+    <context:component-scan base-package="kz.controller"></context:component-scan>        
+    <context:component-scan base-package="kz.validator"></context:component-scan>   
+    
     <context:annotation-config/>
     <mvc:annotation-driven/>
+    
+               
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -39,7 +44,8 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
+    
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
     
     <!--
     The index controller.
