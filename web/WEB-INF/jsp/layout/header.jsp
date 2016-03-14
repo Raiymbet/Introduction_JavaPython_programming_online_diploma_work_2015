@@ -4,6 +4,7 @@
     Author     : Raiymbet
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-md-12"style=""> 
                     <div class="col-md-6" style="">
@@ -14,6 +15,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="" style="margin-top: 10%">
+                            
+                            <%=session.getAttribute("userSession")%>
                             
                             <a href="<%=request.getContextPath()%>/registration.htm">                                
                                 <button class="btn btn-primary" style="float: right; margin-left: 5px">Тіркелу</button>

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Locale;
 import javax.lang.model.SourceVersion;
 import javax.script.ScriptException;
 import javax.tools.Diagnostic;
@@ -44,7 +45,7 @@ public class CustomJavaCompiler {
                 //here we provide test and get result of compile
                 for(final Diagnostic<? extends JavaFileObject> diagnostic: diagnostics.getDiagnostics() ){
                     compile_result+=
-                            diagnostic.getMessage(null)+" line "+
+                            diagnostic.getMessage(Locale.ENGLISH)+" line "+
                             diagnostic.getLineNumber()+" in "+ 
                             diagnostic.getSource().getName();
                 }

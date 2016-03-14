@@ -8,6 +8,8 @@ package kz.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import kz.dao.ExercisesDAO;
 import kz.dao.ExercisesDAOImpl;
 import kz.dao.ThemesDAO;
@@ -15,7 +17,8 @@ import kz.dao.ThemesDAOImpl;
 import kz.model.Exercises;
 import kz.model.Themes;
 import kz.service.DocumentReader;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,14 +47,16 @@ public class indexController {
     }
     
     @RequestMapping(value = "/index/{themeId}/tutorial.htm", method = RequestMethod.GET)
-    public ModelAndView getThemeContent(@PathVariable("themeId") Integer id) throws SQLException, IOException{
+    public ModelAndView getThemeContent(@PathVariable("themeId") Integer id, HttpServletRequest request) throws SQLException, IOException{
         ModelAndView mv = new ModelAndView("tutorial");
                        
         ThemesDAO themeService = new ThemesDAOImpl(); 
         Themes theme = themeService.findByID(id);
         
-        String content = DocumentReader.readDocxFile("F:/NetBeansProjects/DiplomaProject/web/resources/tutorial_doc/"+theme.getThemeDoc());
-        
+        String path = request.getSession().getServletContext().getRealPath("/resources/tutorial_doc/");
+        System.out.println(path); 
+        String content = DocumentReader.readDocxFile(path+"/"+theme.getThemeDoc());
+               
         List themeExercises = themeService.getThemeExercises(theme);
         
         mv.addObject("themes", themeService.getAll()); 
@@ -62,7 +67,7 @@ public class indexController {
     }
     
     @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.GET)
-    public ModelAndView take_Exercise(@PathVariable("exerciseId") int exerciseId, @PathVariable("themeId") int themeId) throws SQLException, IOException{
+    public ModelAndView take_Exercise(@PathVariable("exerciseId") int exerciseId, @PathVariable("themeId") int themeId, HttpServletRequest request) throws SQLException, IOException{
         ModelAndView mv = new ModelAndView("take_exercise");        
         
         ExercisesDAO exerciseService = new ExercisesDAOImpl();
@@ -70,7 +75,9 @@ public class indexController {
         
         List<Exercises> themeExercises = exerciseService.getExercisesByThemeID(themeId);
         
-        String code_example = DocumentReader.readCodeExample("F:/NetBeansProjects/DiplomaProject/src/java/kz/service/Example.java");
+        String path = request.getSession().getServletContext().getRealPath("/resources/files/Example.java");
+        System.out.println(path); 
+        String code_example = DocumentReader.readCodeExample(path);
         
         mv.addObject("exercise", exercise);
         mv.addObject("themeExercises", themeExercises);
