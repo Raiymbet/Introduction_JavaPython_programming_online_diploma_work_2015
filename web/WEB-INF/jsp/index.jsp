@@ -13,6 +13,8 @@
         
         <script src="<c:url value="/resources/lib/jquery-2.1.4.js" />"></script>
         <script src="<c:url value="/resources/lib/bootstrap/js/bootstrap.js" />"></script>
+        
+        <script src="<c:url value="/resources/custom/js/index.js"/>"></script>
     </head>
 
     <body>
@@ -56,17 +58,4 @@
         
     </body>
     
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#btn_menu_list').click( function () {
-                if($('#sidebar').hasClass('sidebar-active')){
-                    $('#sidebar').removeClass('sidebar-active').addClass('sidebar-inactive');
-                    $('#dynamic_content').removeClass('main-content').addClass('main-content-full');
-                }else{
-                    $('#sidebar').removeClass('sidebar-inactive').addClass('sidebar-active');
-                    $('#dynamic_content').removeClass('main-content-full').addClass('main-content');
-                }
-            });            
-        });              
-    </script>
 </html>

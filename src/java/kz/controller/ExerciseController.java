@@ -7,15 +7,14 @@ package kz.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.script.ScriptException;
-import kz.dao.ExercisesDAO;
-import kz.dao.ExercisesDAOImpl;
-import kz.model.Exercises;
+import javax.servlet.http.HttpServletRequest;
 import kz.service.CustomJavaCompiler;
+import kz.service.DocumentReader;
+import kz.service.JavaRunner;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,11 +28,22 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ExerciseController {
     
-  @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.POST)
-  @ResponseBody
-  public String run_code(ModelAndView model, @RequestParam(value = "code", required = true) String code) throws IOException, URISyntaxException, ScriptException{
-      String code_result = CustomJavaCompiler.javaCompile("F:/NetBeansProjects/DiplomaProject/src/java/kz/service/Example.java");
-      return code_result;
+    @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.POST)
+    @ResponseBody
+    public String run_code(ModelAndView model, @RequestParam(value = "code", required = true) String code, HttpServletRequest request) throws IOException, URISyntaxException, ScriptException{
+        String path = request.getSession().getServletContext().getRealPath("/resources/files/Example.java");
+        System.out.println("Run path: "+path);
+        DocumentReader.writeCodeToFile(path, code);
+        String code_result = CustomJavaCompiler.javaCompile(path);
+        if("Task is called and compilation is completed!".equals(code_result)){
+            try {
+                String run_result = JavaRunner.runProcess("java Example",request.getSession().getServletContext().getRealPath("/resources/files"));
+                return run_result;
+            } catch (Exception ex) {
+                Logger.getLogger(ExerciseController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return code_result;
   }
     
 }

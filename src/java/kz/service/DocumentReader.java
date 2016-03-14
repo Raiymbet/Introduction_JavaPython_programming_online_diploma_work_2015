@@ -8,6 +8,7 @@ package kz.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -35,7 +36,11 @@ public class DocumentReader {
 				
             //System.out.println("Total no of paragraph "+paragraphs.size());
 		for (XWPFParagraph para : paragraphs) {
-                    content.append("<p>"+para.getParagraphText()+"</p>");
+                    content.append("<p>"+
+                            " Style: "+para.getStyle()+
+                            " Element type: "+para.getElementType()+
+                            " Text: "+para.getParagraphText()+
+                            "</p>");
 		}
             //System.out.println(content);
             fis.close();
@@ -77,5 +82,12 @@ public class DocumentReader {
 //            }            
             fins.close();  
             return buffer.toString();
+    }
+    
+    public static void writeCodeToFile(String filename, String content) throws IOException{
+        File file = new File(filename);
+        FileWriter fw = new FileWriter(file);
+        fw.write(content);
+        fw.close();
     }
 }
