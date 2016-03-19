@@ -20,25 +20,32 @@
     <body>
         
         <div class="container-fluid">
-            <%-- Header --%>
-            <div class="row">
-                <%@include file="./layout/header.jsp" %>
-            </div>                      
-                
-            <%-- Links --%>
-            <div class="row"> 
-                <%@include file="./layout/navigation.jsp" %>                            
-            </div>           
+            
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="collapse navbar-collapse">
+                                          
+                        <%-- Header --%>
+                        <div class="row" style="margin: 0px">
+                            <%@include file="./layout/header.jsp" %>
+                        </div>  
+                        <%-- Links --%>
+                        <div class="row" style="margin: 0px"> 
+                            <%@include file="./layout/navigation.jsp" %>                            
+                        </div>   
+                        
+                </div>                
+            </nav>                  
              
             <%-- Center --%>
-            <div class="row">
-                <div class="col-md-12" style="background-color: #9ad3de; height: 800px; margin-top: 2px">
+            <div class="row" style=" padding: 0px;padding-top: 128px;">
+                <div class="col-md-12" style="padding: 0px;">
                    
-                    <%@include file="./layout/sidebar_menu.jsp" %>
-                   
+                    <div>
+                        <%@include file="./layout/sidebar_menu.jsp" %>                        
+                    </div>                   
 
                     <div id="dynamic_content" class="main-content pull-right">
-                        <div class="">
+                        <div class="" style="height: 800px;">
                             <h1>Creating Swipeable Side Menu For the Web</h1>
                             <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
@@ -47,15 +54,16 @@
                                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
                                 mollit anim id est laborum."</p>
                         </div>
+
+                        <%-- Footer --%>
+                        <div class="row" style="float: bottom">
+                            <%@include file="./layout/footer.jsp" %>
+                        </div>
                     </div>
 
                 </div>
             </div>
-                        
-            <%-- Footer --%>
-            <%@include file="./layout/footer.jsp" %>
-        </div>           
-        
+        </div>
     </body>
     
 </html>

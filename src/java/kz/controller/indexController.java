@@ -8,17 +8,11 @@ package kz.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import kz.dao.ExercisesDAO;
-import kz.dao.ExercisesDAOImpl;
 import kz.dao.ThemesDAO;
 import kz.dao.ThemesDAOImpl;
-import kz.model.Exercises;
 import kz.model.Themes;
 import kz.service.DocumentReader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,8 +48,10 @@ public class indexController {
         Themes theme = themeService.findByID(id);
         
         String path = request.getSession().getServletContext().getRealPath("/resources/tutorial_doc/");
+        path+="\\"+theme.getThemeDoc(); 
         System.out.println(path); 
-        String content = DocumentReader.readDocxFile(path+"/"+theme.getThemeDoc());
+        
+        String content = DocumentReader.readDocxFile(path);
                
         List themeExercises = themeService.getThemeExercises(theme);
         
@@ -64,30 +60,6 @@ public class indexController {
         mv.addObject("content", content);
         mv.addObject("exercises", themeExercises);
         return mv;
-    }
-    
-    @RequestMapping(value = "/tutorial/{themeId}/{exerciseId}/take_exercise.htm", method = RequestMethod.GET)
-    public ModelAndView take_Exercise(@PathVariable("exerciseId") int exerciseId, @PathVariable("themeId") int themeId, HttpServletRequest request) throws SQLException, IOException{
-        ModelAndView mv = new ModelAndView("take_exercise");        
-        
-        ExercisesDAO exerciseService = new ExercisesDAOImpl();
-        Exercises exercise = exerciseService.findByID(exerciseId);
-        
-        List<Exercises> themeExercises = exerciseService.getExercisesByThemeID(themeId);
-        
-        String path = request.getSession().getServletContext().getRealPath("/resources/files/Example.java");
-        System.out.println(path); 
-        String code_example = DocumentReader.readCodeExample(path);
-        
-        mv.addObject("exercise", exercise);
-        mv.addObject("themeExercises", themeExercises);
-        mv.addObject("code", code_example);
-        return mv;
-    }
-    
-    @RequestMapping("/videolesson.htm")
-    public String videolesson(){
-        return "videolesson";
     }
     
     @RequestMapping("/library.htm")

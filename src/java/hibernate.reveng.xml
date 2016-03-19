@@ -5,4 +5,5 @@
   <table-filter match-name="themes"/>
   <table-filter match-name="users"/>
   <table-filter match-name="exercises"/>
+  <table-filter match-name="videos"/>
 </hibernate-reverse-engineering>

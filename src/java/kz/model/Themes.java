@@ -26,7 +26,7 @@ public class Themes  implements java.io.Serializable {
      private String themeDoc;
      
      private List<Exercises> themeExercises = new ArrayList<>();
-     
+     private Videos video;
 
     public Themes() {
     }
@@ -76,6 +76,16 @@ public class Themes  implements java.io.Serializable {
     
     public void setThemeExercises(List<Exercises> themeExercises){
         this.themeExercises = themeExercises;
+    }
+    
+    @OneToMany
+    @JoinColumn(name = "ID_theme")
+    public Videos getThemeVideo(){
+        return this.video;
+    }
+    
+    public void setThemeVideo(Videos video){
+        this.video = video;
     }
 }
 

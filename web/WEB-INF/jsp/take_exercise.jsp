@@ -39,8 +39,8 @@
                             <textarea class="form-control" readonly rows="15" id="exercise_description">
                                 Тапсырма сипаттамасы:
 
-                                <c:out value="${exercise.name}" />
-                                <c:out value="${exercise.description}" />
+                                <c:out escapeXml="" value="${exercise.name}" />
+                                <c:out escapeXml="" value="${exercise.description}" />
                             </textarea>
                         </div>
                     </div>

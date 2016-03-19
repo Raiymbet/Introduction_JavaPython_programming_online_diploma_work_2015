@@ -12,10 +12,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Iterator;
 import java.util.List;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.IBodyElement;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFStyles;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 
 /**
  *
@@ -31,18 +36,34 @@ public class DocumentReader {
             StringBuffer content = new StringBuffer();        
 			
             XWPFDocument document = new XWPFDocument(fis);
-
-            List<XWPFParagraph> paragraphs = document.getParagraphs();
-				
+            XWPFStyles styles = document.getStyles();
+            //List<XWPFParagraph> paragraphs = document.getParagraphs();				
             //System.out.println("Total no of paragraph "+paragraphs.size());
-		for (XWPFParagraph para : paragraphs) {
-                    content.append("<p>"+
-                            " Style: "+para.getStyle()+
-                            " Element type: "+para.getElementType()+
-                            " Text: "+para.getParagraphText()+
-                            "</p>");
-		}
+		//for (XWPFParagraph para : paragraphs) {
+                  //  content.append("<p>"+para.getParagraphText()+"</p>");
+		//}
             //System.out.println(content);
+            
+            Iterator<IBodyElement> bodyElementIterator = document.getBodyElementsIterator();
+            while(bodyElementIterator.hasNext()){
+                IBodyElement element = bodyElementIterator.next();
+                System.out.println(element.getElementType().name());
+                if("TABLE".equalsIgnoreCase(element.getElementType().name())){
+                    content.append("<table>");
+                    List<XWPFTable> tableList  = element.getBody().getTables();
+                    for(XWPFTable table: tableList){
+                        System.out.println("Total Number of Rows of Table: "+table.getNumberOfRows());
+                        content.append("<tr>"+table.getText()+"</tr>");
+                    }
+                    content.append("</table>");
+                }else if("PICTURE".equalsIgnoreCase(element.getElementType().name())){
+                    System.out.println("This is picture");
+                }else if("PARAGRAPH".equalsIgnoreCase(element.getElementType().name())){
+                    System.out.println("This is Paragraph");
+                    content.append("<p>"+element.getBody().getParagraph(null)+"</p>");
+                }
+            }
+            
             fis.close();
             return content.toString();
 	} catch (Exception e) {

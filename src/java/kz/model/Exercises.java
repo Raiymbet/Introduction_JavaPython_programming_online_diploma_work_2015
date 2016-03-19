@@ -22,14 +22,13 @@ public class Exercises  implements java.io.Serializable {
      private String name;
      private String description;
      
-     private Themes theme;
-     
     public Exercises() {
     }
 
-    public Exercises(int id, int ID_theme, String description) {
+    public Exercises(int id, int ID_theme, String name, String description) {
        this.id = id;
        this.ID_theme = ID_theme;
+       this.name = name;
        this.description = description;
     }
    

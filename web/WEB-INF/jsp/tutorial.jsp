@@ -19,24 +19,33 @@
     <body>
         
         <div class="container-fluid">
-            <%-- Header --%>
-            <div class="row">
-                <%@include file="./layout/header.jsp" %>
-            </div>                      
-                
-            <%-- Links --%>
-            <div class="row">
-                <%@include file="./layout/navigation.jsp" %>                                           
-            </div>           
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="collapse navbar-collapse">
+                                          
+                        <%-- Header --%>
+                        <div class="row" style="margin: 0px">
+                            <%@include file="./layout/header.jsp" %>
+                        </div>  
+                        <%-- Links --%>
+                        <div class="row" style="margin: 0px"> 
+                            <%@include file="./layout/navigation.jsp" %>                            
+                        </div>   
+                        
+                </div>                
+            </nav>             
              
             <%-- Center --%>
-            <div class="row">
-                <div class="col-md-12" style="background-color: #9ad3de; margin-top: 2px">
-                    <%@include file="./layout/sidebar_menu.jsp" %>
+            <div class="row" style=" padding: 0px;padding-top: 128px;">
+                <div class="col-md-12" style="padding: 0px;">
+                    
+                    <div>
+                        <%@include file="./layout/sidebar_menu.jsp" %>                        
+                    </div>
                    
 
-                    <div id="dynamic_content" class="main-content pull-right">
-                        <div class="">
+                    <div id="dynamic_content" class="main-content pull-right" 
+                         style="padding-top: 20px; padding-bottom: 100px;">
+                        <div class="" style="">
                             <h1>
                                 <c:out value="${themeContent.id}"/>
                                 <c:out value="${themeContent.theme}"/>
@@ -66,11 +75,6 @@
                     </div>
 
                 </div>
-            </div>
-                        
-            <%-- Footer --%>
-            <div class="col-md-12" style="height: 100px">
-                <p class="text-muted">This is footer. Here will be footer contexts.</p>
             </div>
         </div>           
         

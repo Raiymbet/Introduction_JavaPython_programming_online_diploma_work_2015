@@ -3,7 +3,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@page errorPage="error_pages/fail_login.jsp" %>
 <html>
     <head>       
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

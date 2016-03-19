@@ -8,12 +8,16 @@ and open the template in the editor.
     Author     : Raiymbet
 */
 
-#sidebar{
+            #sidebar{
                 width: 20%;
                 height: 100%;
+                position: fixed;
+                z-index: 1000;
+                overflow-y: auto;
+                background: #000;
             }
             #sidebar ul li{
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 500;
                 line-height: 2.5em;
                 border-bottom: 1px solid #ddd;
