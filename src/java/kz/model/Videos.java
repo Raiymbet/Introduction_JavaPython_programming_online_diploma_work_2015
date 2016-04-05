@@ -24,17 +24,19 @@ public class Videos implements java.io.Serializable{
     private int ID_theme;
     private String name;
     private String description;
-    private String url;
+    private String file;
+    private String image;
     
     public Videos(){
     }
     
-    public Videos(int id, int ID_theme, String name, String description, String url){
+    public Videos(int id, int ID_theme, String name, String description, String file, String image){
         this.id = id;
         this.ID_theme = ID_theme;
         this.name = name;
         this.description = description;
-        this.url = url;
+        this.file = file;
+        this.image = image;
     }
 
     @Id
@@ -93,17 +95,32 @@ public class Videos implements java.io.Serializable{
     }
 
     /**
-     * @return the url
+     * @return the file
      */
-    @Column(name = "url", nullable = false, length = 200)
-    public String getUrl() {
-        return url;
+    @Column(name = "file", nullable = false, length = 200)
+    public String getFile() {
+        return file;
     }
 
     /**
-     * @param url the url to set
+     * @param file the url to set
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFile(String url) {
+        this.file = file;
+    }
+
+    /**
+     * @return the image
+     */
+    @Column(name = "image", nullable = false, length = 200)
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
     }
 }

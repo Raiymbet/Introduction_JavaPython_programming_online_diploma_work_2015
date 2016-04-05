@@ -5,6 +5,7 @@
  */
 package kz.model;
 
+import kz.model.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,26 +16,28 @@ import javax.persistence.Table;
  * @author Raiymbet
  */
 @Entity
-@Table(name="videos"
+@Table(name="books"
         ,catalog="diploma_work"
 )
-public class Videos implements java.io.Serializable{
+public class Books implements java.io.Serializable{
     
     private int id;
-    private int ID_theme;
     private String name;
     private String description;
-    private String url;
+    private int avg_grade;
+    private String file;    
+    private String image;
     
-    public Videos(){
+    public Books(){
     }
     
-    public Videos(int id, int ID_theme, String name, String description, String url){
+    public Books(int id, String name, String description, int avg_grade, String file, String image){
         this.id = id;
-        this.ID_theme = ID_theme;
         this.name = name;
         this.description = description;
-        this.url = url;
+        this.avg_grade = avg_grade;
+        this.file = file;
+        this.image = image;
     }
 
     @Id
@@ -48,24 +51,9 @@ public class Videos implements java.io.Serializable{
     }
 
     /**
-     * @return the ID_theme
-     */
-    @Column(name = "ID_theme", nullable = false)
-    public int getID_theme() {
-        return ID_theme;
-    }
-
-    /**
-     * @param ID_theme the ID_theme to set
-     */
-    public void setID_theme(int ID_theme) {
-        this.ID_theme = ID_theme;
-    }
-
-    /**
      * @return the name
      */
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 200)
     public String getName() {
         return name;
     }
@@ -80,7 +68,7 @@ public class Videos implements java.io.Serializable{
     /**
      * @return the description
      */
-    @Column(name = "description", nullable = false, length = 500)
+    @Column(name = "description", nullable = false, length = 1000)
     public String getDescription() {
         return description;
     }
@@ -93,17 +81,47 @@ public class Videos implements java.io.Serializable{
     }
 
     /**
-     * @return the url
+     * @return the file
      */
-    @Column(name = "url", nullable = false, length = 200)
-    public String getUrl() {
-        return url;
+    @Column(name = "file", nullable = false, length = 200)
+    public String getFile() {
+        return file;
     }
 
     /**
-     * @param url the url to set
+     * @param file the url to set
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFile(String url) {
+        this.file = file;
+    }
+
+    /**
+     * @return the image
+     */
+    @Column(name = "image", nullable = false, length = 200)
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    /**
+     * @return the avg_grade
+     */
+    @Column(name = "avg_grade", nullable = true)
+    public int getAvg_grade() {
+        return avg_grade;
+    }
+
+    /**
+     * @param avg_grade the avg_grade to set
+     */
+    public void setAvg_grade(int avg_grade) {
+        this.avg_grade = avg_grade;
     }
 }

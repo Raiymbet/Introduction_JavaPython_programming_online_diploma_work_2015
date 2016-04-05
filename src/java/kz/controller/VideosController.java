@@ -6,6 +6,7 @@
 package kz.controller;
 
 import java.sql.SQLException;
+import javax.servlet.http.HttpServletResponse;
 import kz.dao.VideosDAO;
 import kz.dao.VideosDAOImpl;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class VideosController {
         
     @RequestMapping(value = "/videolesson.htm", method = RequestMethod.GET)
-    public ModelAndView videolesson(Model model) throws SQLException{
-        ModelAndView mv = new ModelAndView("videolesson");        
-        VideosDAO all_videos = new VideosDAOImpl();   
-        mv.addObject("videos", all_videos.getAll());   
+    public ModelAndView videolesson(Model model, HttpServletResponse response) throws SQLException{
+        ModelAndView mv = new ModelAndView("videolesson");  
         return mv;
     }
+    
 }

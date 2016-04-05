@@ -71,6 +71,7 @@ public class UserDAOImpl implements UserDAO{
             return null;
         }else{        
             Users result_user = (Users) cr.list().get(0);
+            System.out.println(cr.toString());
             session.close();
             return result_user;
         }        
@@ -91,7 +92,10 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public Users findByEmail(String email) throws SQLException {
         session = sessionFactory.openSession();
-        Users user = (Users) session.get(Users.class,email);
+        Criteria cr = session.createCriteria(Users.class);
+        cr.add(Restrictions.eq("email", email));
+        cr.uniqueResult();
+        Users user = (Users) cr.list().get(0);
         if (user == null) {
                 throw new NullPointerException("404!User not found by email");
             } else {    

@@ -7,6 +7,8 @@ package kz.controller;
 
 import java.sql.SQLException;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import kz.dao.UserDAO;
@@ -40,6 +42,13 @@ public class LoginController{
         return mv;
     }
     
+    @RequestMapping(value="/logout.htm", method = RequestMethod.GET)
+    public ModelAndView logout(HttpSession session){
+        session.invalidate();
+        ModelAndView mv = new ModelAndView("redirect:/index.htm");
+        return mv;
+    }
+    
     @RequestMapping(value="/login.htm", method = RequestMethod.POST)
     public ModelAndView autenthication(@ModelAttribute("login") @Valid Users user, HttpSession session, BindingResult result) throws SQLException{
         //System.out.println(user.getEmail()+" "+user.getPassword());
@@ -53,6 +62,7 @@ public class LoginController{
             ModelAndView mv = new ModelAndView("login");
             return mv;
         }else{
+            user = userService.findByEmail(user.getEmail());
             Users user_auth = userService.authority(user);
             if (user_auth != null) {
                 session.setAttribute(SESSION_USER, user);

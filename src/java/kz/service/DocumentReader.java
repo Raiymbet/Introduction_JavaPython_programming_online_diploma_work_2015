@@ -5,7 +5,9 @@
  */
 package kz.service;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -14,13 +16,20 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import javax.imageio.ImageIO;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFPictureData;
+import org.apache.poi.xwpf.usermodel.XWPFStyle;
 import org.apache.poi.xwpf.usermodel.XWPFStyles;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.openxmlformats.schemas.drawingml.x2006.picture.PicDocument;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
 
 /**
  *
@@ -36,31 +45,72 @@ public class DocumentReader {
             StringBuffer content = new StringBuffer();        
 			
             XWPFDocument document = new XWPFDocument(fis);
-            XWPFStyles styles = document.getStyles();
-            //List<XWPFParagraph> paragraphs = document.getParagraphs();				
-            //System.out.println("Total no of paragraph "+paragraphs.size());
-		//for (XWPFParagraph para : paragraphs) {
-                  //  content.append("<p>"+para.getParagraphText()+"</p>");
-		//}
-            //System.out.println(content);
+            XWPFStyles styles = document.getStyles();            
+            
+            List<XWPFParagraph> paragraphs = document.getParagraphs();	
+            List<XWPFTable> tables = document.getTables();
+            List<XWPFPictureData> pictures = document.getAllPictures();
+            
+            //int Picture_ID = 0;
+            for(XWPFPictureData picture: pictures){
+                //XWPFPictureData picture = pictures.get(Picture_ID);
+                    System.out.println("Picture: "+picture.getFileName());
+                    byte[] pictureData = picture.getData();
+                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(pictureData));
+                    ImageIO.write(image, picture.getFileName(), file);
+                    content.append("<p>");
+                    content.append("Here must be image");
+                    content.append("</p>");
+                    //Picture_ID++;
+            }
             
             Iterator<IBodyElement> bodyElementIterator = document.getBodyElementsIterator();
+            int Table_ID = 0;
+            int Paragraph_ID = 0;
             while(bodyElementIterator.hasNext()){
+                
                 IBodyElement element = bodyElementIterator.next();
-                System.out.println(element.getElementType().name());
+                System.out.println(element.getElementType().name());//prints Element type name
+                
                 if("TABLE".equalsIgnoreCase(element.getElementType().name())){
-                    content.append("<table>");
-                    List<XWPFTable> tableList  = element.getBody().getTables();
-                    for(XWPFTable table: tableList){
-                        System.out.println("Total Number of Rows of Table: "+table.getNumberOfRows());
-                        content.append("<tr>"+table.getText()+"</tr>");
-                    }
+                    
+                    content.append("<table>");                    
+                    XWPFTable table = tables.get(Table_ID);
+                    CTTbl cttbl = table.getCTTbl();
+                    CTTblPr cttblPr = cttbl.getTblPr();
+                    
+                    List<XWPFTableRow> tblRows = table.getRows();
+                    for(XWPFTableRow tblRow : tblRows){
+                        content.append("<tr>");                        
+                        List<XWPFTableCell> tblCells = tblRow.getTableCells();
+                        for(XWPFTableCell tblCell : tblCells){
+                            content.append("<td>");                         
+                            content.append(tblCell.getText());
+                            content.append("</td>");
+                        }                        
+                        content.append("</tr>");
+                    }                                        
                     content.append("</table>");
-                }else if("PICTURE".equalsIgnoreCase(element.getElementType().name())){
-                    System.out.println("This is picture");
+                    Table_ID++;
+                    
                 }else if("PARAGRAPH".equalsIgnoreCase(element.getElementType().name())){
-                    System.out.println("This is Paragraph");
-                    content.append("<p>"+element.getBody().getParagraph(null)+"</p>");
+                    
+                    XWPFParagraph paragraph = paragraphs.get(Paragraph_ID);
+                    
+                    String styleClass = null;
+                    if(paragraph.getStyleID()!=null){
+                        content.append("<p class=''>");
+                        XWPFStyle style = styles.getStyle(paragraph.getStyleID());
+                        if(style!=null && style.getName()!=null){
+                            //here will be code creation of tag with class style
+                        }
+                    }else{                        
+                        content.append("<p>");
+                    }
+                    content.append(paragraph.getText());
+                    content.append("</p>");
+                    Paragraph_ID++;
+                    
                 }
             }
             
