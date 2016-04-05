@@ -45,7 +45,6 @@ public class DocumentReader {
             StringBuffer content = new StringBuffer();        
 			
             XWPFDocument document = new XWPFDocument(fis);
-<<<<<<< HEAD
             XWPFStyles styles = document.getStyles();            
             
             List<XWPFParagraph> paragraphs = document.getParagraphs();	
@@ -114,21 +113,7 @@ public class DocumentReader {
                     
                 }
             }
-            
-=======
-
-            List<XWPFParagraph> paragraphs = document.getParagraphs();
-				
-            //System.out.println("Total no of paragraph "+paragraphs.size());
-		for (XWPFParagraph para : paragraphs) {
-                    content.append("<p>"+
-                            " Style: "+para.getStyle()+
-                            " Element type: "+para.getElementType()+
-                            " Text: "+para.getParagraphText()+
-                            "</p>");
-		}
-            //System.out.println(content);
->>>>>>> origin/master
+                
             fis.close();
             return content.toString();
 	} catch (Exception e) {

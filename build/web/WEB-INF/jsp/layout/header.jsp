@@ -21,7 +21,7 @@
     out.print(" Inactive interval: "+session.getMaxInactiveInterval());
 %>
 
-<div class="col-md-12"style="background-color: #E5E5E5; padding: 5px; border-top: 1px solid; border-color: #ccc;"> 
+<div class="col-md-12"style="background-color: #e9e9e9; padding: 5px; border-top: 1px solid; border-color: #ccc;"> 
                     
     <div class="col-md-3" style="">                        
         <div class="pull-left">
@@ -31,7 +31,7 @@
     </div>
         
     <div class="col-md-9">
-        <div class="" style="margin-top: 2.5%">
+        <div class="" style="margin-top: 2.5%">   
                             
             <%if(user==null){%>
                 <a href="<%=request.getContextPath()%>/registration.htm">                                

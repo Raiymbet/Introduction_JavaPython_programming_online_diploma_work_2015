@@ -24,21 +24,16 @@
                 background-color: #fff;
                 -webkit-background-clip: padding-box;
                 background-clip: padding-box;
-                border: 1px solid #999;
-                border: 1px solid rgba(0,0,0,.2);
-                border-radius: 6px;
-                outline: 0;
-                -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
-                box-shadow: 0 3px 9px rgba(0,0,0,.5);    
-                -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
-                box-shadow: 0 5px 15px rgba(0,0,0,.5);
+                border: 1px solid #ccc;
+                background-color: #e9e9e9;
                 ">
             
             <form:form name="login_form" method="POST" modelAttribute="login">
+                
                 <div class="" style="min-height: 16.43px;
                     padding: 1px;
-                    border-bottom: 1px solid #e5e5e5;">
-                    <h1 class="text-info">Login</h1>
+                    border-bottom: 1px solid #ccc;">
+                    <h1 class="text-info">Жүйеге кіру</h1>
                 </div>
                 
                 <div class="row">
@@ -52,7 +47,7 @@
                 
                 <div class="form-group" style="margin-top: 15px">                               
                     <div class="input-group">
-                        <div class="input-group-addon">
+                        <div class="input-group-addon" >
                             <i class="glyphicon glyphicon-envelope"></i>
                         </div>
                         <form:input path="email" class="form-control" type="email" placeholder="Email" />
@@ -73,10 +68,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div style="float: left">                            
-                            <a href="#" class="text-primary">Көмек керек пе?</a>
+                            <a href="#" class="text-primary">Көмекке мұқтажсыз ба?</a>
                         </div>
                         <div style="float: right">
-                            <a href="#" class="text-primary">Тіркелу</a>                            
+                            <a href="<%=request.getContextPath()%>/registration.htm" class="text-primary">Тіркелу</a>                            
                         </div>
                     </div>
                 </div>
@@ -84,8 +79,8 @@
                 <div class="row" style="margin-top: 15px">
                     <div class="col-md-12">
                         <div style="float: right">                                     
-                            <button class="btn btn-primary" type="submit">Login</button>
-                            <a href="#" class="btn btn-primary">Cancel</a>                           
+                            <button class="btn btn-primary" type="submit">Кіру</button>
+                            <a href="#" class="btn btn-primary">Болдырмау</a>                           
                         </div>
                     </div>
                 </div>

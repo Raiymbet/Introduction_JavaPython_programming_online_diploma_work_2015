@@ -17,9 +17,32 @@
     </head>
     <body>
         
-        <div class="col-md-6 col-md-offset-3">
-            <h1>Hello World from Registration Page!</h1>
+        <div class="center-block" style="position: relative;
+                width: 40%;
+                padding: 15px;
+                margin-top: 5%;
+                background-color: #fff;
+                -webkit-background-clip: padding-box;
+                background-clip: padding-box;
+                border: 1px solid #ccc; 
+                background-color: #e9e9e9;
+                ">
+           
             <form:form name="register_form" method="POST" commandName="user">
+                
+                <div class="" style="min-height: 16.43px;
+                    padding: 1px;
+                    border-bottom: 1px solid #ccc;">
+                    <h1 class="text-info">Жүйеге тіркелу</h1>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">                        
+                        <p class="text-info">
+                            Қош келдіңіз! Біз сіздің жүйе қолданушысы болатыныңызға қуаныштымыз.
+                        </p>
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <div class="input-group">
@@ -71,7 +94,25 @@
                         <form:errors path="password" cssClass="errors"/>
                 </div>
                 
-                <button class="btn btn-success" type="submit">Register</button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="float: left">                            
+                            <a href="#" class="text-primary">Көмекке мұқтажсыз ба?</a>
+                        </div>
+                        <div style="float: right">
+                            <a href="<%=request.getContextPath()%>/login.htm" class="text-primary">Кіру</a>                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-md-12">
+                        <div style="float: right">                                     
+                            <button class="btn btn-primary" type="submit">Тіркелу</button>
+                            <a href="#" class="btn btn-primary">Болдырмау</a>                           
+                        </div>
+                    </div>
+                </div>
             </form:form>
         </div>
     </body>
