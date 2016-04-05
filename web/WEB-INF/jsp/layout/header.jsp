@@ -4,6 +4,7 @@
     Author     : Raiymbet
 --%>
 
+<<<<<<< HEAD
 <%@page import="java.util.Date"%>
 <%@page import="kz.model.Users"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,6 +33,29 @@
         
     <div class="col-md-9">
         <div class="" style="margin-top: 2.5%">
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<div class="col-md-12"style=""> 
+                    <div class="col-md-6" style="">
+                        <div class="pull-left">
+                            <h1>JPtutprog.kz</h1>
+                            <%--<img src="<c:url value="/resources/img/logo.png"/>" width="400" height="200"  alt="programming"/> --%>                   
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="" style="margin-top: 10%">
+                            
+                            <%=session.getAttribute("userSession")%>
+                            
+                            <a href="<%=request.getContextPath()%>/registration.htm">                                
+                                <button class="btn btn-primary" style="float: right; margin-left: 5px">Тіркелу</button>
+                            </a>
+                            
+                            <a href="<%=request.getContextPath()%>/login.htm">
+                                <button class="btn btn-primary" style="float: right;">Кіру</button>                               
+                            </a>
+>>>>>>> origin/master
                             
             <%if(user==null){%>
                 <a href="<%=request.getContextPath()%>/registration.htm">                                
